@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "Driver": {
+      "title": "Driver",
+      "description": "Represents a registered motorcycle taxi driver inside the Moto Já system.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "motoModel": { "type": "string" },
+        "motoColor": { "type": "string" },
+        "motoPlate": { "type": "string" },
+        "online": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["idle", "busy"] },
+        "rating": { "type": "number" },
+        "totalRides": { "type": "number" },
+        "earnings": { "type": "number" },
+        "currentRideId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "phone", "motoModel", "motoColor", "motoPlate", "online", "status"]
+    },
+    "Ride": {
+      "title": "Ride",
+      "description": "Represents a taxi ride requested by passengers or simulated in the Moto Já system.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "passengerName": { "type": "string" },
+        "passengerPhone": { "type": "string" },
+        "pickupAddress": { "type": "string" },
+        "dropoffAddress": { "type": "string" },
+        "price": { "type": "number" },
+        "distance": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "arrived", "picked_up", "completed", "cancelled"] },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "acceptedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["passengerName", "passengerPhone", "pickupAddress", "dropoffAddress", "price", "distance", "status", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Represents a direct message exchanged between drivers and passengers for active rides.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "rideId": { "type": "string" },
+        "sender": { "type": "string", "enum": ["driver", "passenger"] },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rideId", "sender", "text", "createdAt"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Represents the digital wallet of a driver containing their current balance.",
+      "type": "object",
+      "properties": {
+        "balance": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["balance", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "drivers/{driverId}": {
+      "schema": "Driver",
+      "description": "Profile information and current activity status of taxi drivers."
+    },
+    "rides/{rideId}": {
+      "schema": "Ride",
+      "description": "Information about active and historic taxi rides."
+    },
+    "chats/{chatId}": {
+      "schema": "ChatMessage",
+      "description": "Messages linked to active passenger-driver rides."
+    },
+    "wallets/{driverId}": {
+      "schema": "Wallet",
+      "description": "Digital wallet balance of the driver."
+    }
+  }
+}

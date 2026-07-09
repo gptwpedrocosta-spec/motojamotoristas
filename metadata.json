@@ -1,0 +1,6 @@
+{
+  "name": "Moto Já - Motorista",
+  "description": "Aplicativo exclusivo para motoristas do Moto Já, com gerenciamento de corridas em tempo real, ganhos e perfil.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
